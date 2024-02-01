@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'">
+    <link href="./styles.css" rel="stylesheet">
+    <title>Don't tell google browser</title>
+  </head>
+  <body>
+    <div class="top">
+      <button id="backButton"><</button>
+      <button id="homeButton">home</button>
+      <button id="forwardButton">></button>
+      <input type="text" class="url">
+      <button id="refreshButton">Refresh</button>
+    </div>
+    <webview src="https://www.google.com" id="myWebview"></webview>
+    <script src="script.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        // Auto-focus on the search bar
+        document.getElementById('url').focus();
+
+        // Keyboard shortcut for Ctrl+R for refresh
+        document.addEventListener('keydown', function(event) {
+          if (event.ctrlKey && event.key === 'r') {
+              document.getElementById("myWebview").reload();
+              event.preventDefault();
+          }
+        });
+
+        // Refresh button
+        function refreshPage() {
+          document.getElementById("myWebview").reload();
+        }
+        document.getElementById('refreshButton').addEventListener('click', refreshPage);
+
+        // Context menu for right-clicking
+        document.getElementById("myWebview").addEventListener('contextmenu', function(event) {
+          var linkURL = event.target.href;
+          if (linkURL) {
+              // Opens context menu with options for the link
+              // Add more context menu logic here
+              event.preventDefault();
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
