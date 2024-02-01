@@ -18,10 +18,11 @@
     <script src="script.js"></script>
     <script>
       document.addEventListener('DOMContentLoaded', function() {
-        // Auto-focus on the search bar
+	//some duplicate js in here
+        //auto-focus on the search bar
         document.getElementById('url').focus();
 
-        // Keyboard shortcut for Ctrl+R for refresh
+        //keyboard shortcut for Ctrl+R for refresh
         document.addEventListener('keydown', function(event) {
           if (event.ctrlKey && event.key === 'r') {
               document.getElementById("myWebview").reload();
@@ -29,18 +30,16 @@
           }
         });
 
-        // Refresh button
+        //refresh button
         function refreshPage() {
           document.getElementById("myWebview").reload();
         }
         document.getElementById('refreshButton').addEventListener('click', refreshPage);
 
-        // Context menu for right-clicking
+        //context menu for right-clicking
         document.getElementById("myWebview").addEventListener('contextmenu', function(event) {
           var linkURL = event.target.href;
           if (linkURL) {
-              // Opens context menu with options for the link
-              // Add more context menu logic here
               event.preventDefault();
           }
         });
