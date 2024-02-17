@@ -5,6 +5,8 @@ function createWindow () {
   const mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
+    //TODO change that stupid icon
+    //icon: path.join(__dirname, './assets/icon.png'),
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,

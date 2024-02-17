@@ -1,51 +1,31 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'">
-    <link href="./styles.css" rel="stylesheet">
-    <title>Don't tell google browser</title>
-  </head>
-  <body>
-    <div class="top">
-      <button id="backButton"><</button>
-      <button id="homeButton">home</button>
-      <button id="forwardButton">></button>
-      <input type="text" class="url">
-      <button id="refreshButton">Refresh</button>
-    </div>
-    <webview src="https://www.google.com" id="myWebview"></webview>
-    <script src="browserScripts.js"></script>
-   
-    <!-- why is this here and not there? -->
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-	      //some duplicate js in here
-        //auto-focus on the search bar
-        document.getElementById('url').focus();
 
-        //keyboard shortcut for Ctrl+R for refresh
-        document.addEventListener('keydown', function(event) {
-          if (event.ctrlKey && event.key === 'r') {
-              document.getElementById("myWebview").reload();
-              event.preventDefault();
-          }
-        });
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Security-Policy"
+    content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'">
+  <link href="./styles.css" rel="stylesheet">
+  <title>Don't tell google browser</title>
+</head>
 
-        //refresh button
-        function refreshPage() {
-          document.getElementById("myWebview").reload();
-        }
-        document.getElementById('refreshButton').addEventListener('click', refreshPage);
+<body>
+  <div class="top">
+    <button id="backButton">&lt;</button>
+    <button id="homeButton">home</button>
+    <button id="forwardButton">&gt;</button>
+    <input type="text" class="url">
+    <button id="refreshButton">Refresh</button>
+    <button id="viewHistoryButton">View History</button>
+    <button id="viewCookiesButton">View Cookies</button>
+  </div>
+  <webview src="https://www.duckduckgo.com" id="myWebview"></webview>
 
-        //context menu for right-clicking
-        document.getElementById("myWebview").addEventListener('contextmenu', function(event) {
-          var linkURL = event.target.href;
-          if (linkURL) {
-              event.preventDefault();
-          }
-        });
-      });
-    </script>
-  </body>
+  <script src="browserScripts/navigationScripts.js"></script>
+  <script src="browserScripts/browserScripts.js"></script>
+
+  <script src="privacyScripts/privacyScripts.js"></script>
+  <script src="censorshipScripts/censorshipScripts.js"></script>
+</body>
+
 </html>
