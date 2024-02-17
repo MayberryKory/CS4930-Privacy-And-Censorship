@@ -5,18 +5,25 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const webview = document.getElementById('myWebview');
     let historyStack = [];
+    
 
     // View history
     document.getElementById('viewHistoryButton').addEventListener('click', function() {
         console.log('Browsing History:', historyStack);
     });
 
-    // Add dev tools
-    document.addEventListener('keydown', function (e) {
-        if (e.key === 'F12') {
-            webview.openDevTools();
-        }
+    // Listen for 'did-navigate' event to capture navigations
+    webview.addEventListener('did-navigate', function (event) {
+        console.log('Navigated to:', event.url);
+        historyStack.push(event.url); // Add URL to history
     });
+
+    // Add dev tools this functions not working right. 
+    // document.addEventListener('keydown', function (e) {
+    //     if (e.key === 'F12') {
+    //         webview.toggleDevTools();
+    //     }
+    // });
 
     // Load a URL and push it to the history stack
     function loadURL(url) {
@@ -24,17 +31,19 @@ document.addEventListener('DOMContentLoaded', function () {
         historyStack.push(url); // Add URL to history
     }
 
+    // this functions not working right either.
     // View cookies
+    document.getElementById('viewCookiesButton').addEventListener('click', viewCookies);
     function viewCookies() {
-        const { session } = require('electron');
-        session.defaultSession.cookies.get({})
-            .then((cookies) => {
-                console.log('Cookies:', cookies);
-                // You can create a custom dialog or UI element to display cookies
-            })
-            .catch((error) => {
-                console.error('Error fetching cookies', error);
-            });
+        console.log('i told you this aint working');
+        // const { session } = require('electron');
+        // session.defaultSession.cookies.get({})
+        //     .then((cookies) => {
+        //         console.log('Cookies:', cookies);
+        //     })
+        //     .catch((error) => {
+        //         console.error('Error fetching cookies', error);
+        //     });
     }
 
     // Auto-focus on the search bar --> clicks search bar for you
