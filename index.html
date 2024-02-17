@@ -15,10 +15,12 @@
       <button id="refreshButton">Refresh</button>
     </div>
     <webview src="https://www.google.com" id="myWebview"></webview>
-    <script src="script.js"></script>
+    <script src="browserScripts.js"></script>
+   
+    <!-- why is this here and not there? -->
     <script>
       document.addEventListener('DOMContentLoaded', function() {
-	//some duplicate js in here
+	      //some duplicate js in here
         //auto-focus on the search bar
         document.getElementById('url').focus();
 
