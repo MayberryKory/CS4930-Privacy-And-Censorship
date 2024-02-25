@@ -1,11 +1,20 @@
 .top {
     position: fixed;
     top: 0;
-    background-color: #ccc;
+    background-color: #17202b; /* Blue background color */
+    color: white; /* White text color */
     height: 10%;
     width: 100%;
     padding: 0;
     margin: 0;
+}
+
+.top button {
+    background-color: #0bdbb6; /* Green background color for buttons */
+    color: white; /* White text color */
+    border: none;
+    cursor: pointer;
+    border-radius: 5px; /* Add rounded corners */
 }
 
 body {
