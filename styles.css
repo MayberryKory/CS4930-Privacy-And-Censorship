@@ -1,7 +1,7 @@
 .top {
     position: fixed;
     top: 0;
-    background-color: #17202b; /* Blue background color */
+    background-color: #17202b; /* Dark Blue (Black) background color */
     color: white; /* White text color */
     height: 10%;
     width: 100%;
@@ -10,7 +10,7 @@
 }
 
 .top button {
-    background-color: #0bdbb6; /* Green background color for buttons */
+    background-color: #0bdbb6; /* Cyan background color for buttons */
     color: white; /* White text color */
     border: none;
     cursor: pointer;

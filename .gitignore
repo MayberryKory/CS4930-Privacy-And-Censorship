@@ -76,3 +76,6 @@ dist
 *.swn
 *.swm
 *.swo
+
+#no idea what this is for 
+.DS_Store

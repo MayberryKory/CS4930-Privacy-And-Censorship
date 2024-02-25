@@ -13,24 +13,22 @@ function createWindow() {
   });
 
   mainWindow.once('ready-to-show', () => {
-    mainWindow.setIcon(path.resolve(__dirname, './assets/icon2.png'));
+    mainWindow.setIcon(path.resolve(__dirname, './assets/icon.png'));
     mainWindow.show();
   });
 
   mainWindow.loadFile('index.html');
 
-  //ad-blocking by intercepting network requests?
+  //intercepting network requests to get all URLs (part of adblocking)
   const filter = {
     urls: ['*://*/*'], //intercept all URLs
   };
-
+  
   session.defaultSession.webRequest.onBeforeRequest(filter, (details, callback) => {
-    // Check if the request URL matches a known ad domain
+    //check if the request URL matches a known ad domain
     if (isAdDomain(details.url)) {
-      // Cancel the request
       callback({ cancel: true });
     } else {
-      // Allow the request
       callback({ cancel: false });
     }
   });
@@ -69,8 +67,8 @@ function createWindow() {
 }
 
 function isAdDomain(url) {
-  //add any ads we want to block 
-  //ALSO JUST BLOCKS THE USER FROM GOING THERE TO BEGIN WITH
+  //add any ads you want to block 
+  //also blocks the user from going there to begin with
   const adDomains = [
     'doubleclick.net',
     'googlesyndication.com',
