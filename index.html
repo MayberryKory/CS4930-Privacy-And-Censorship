@@ -1,49 +1,43 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'">
-    <link href="./styles.css" rel="stylesheet">
-    <title>Don't tell google browser</title>
-  </head>
-  <body>
-    <div class="top">
-      <button id="backButton"><</button>
-      <button id="homeButton">home</button>
-      <button id="forwardButton">></button>
-      <input type="text" class="url">
-      <button id="refreshButton">Refresh</button>
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Security-Policy"
+    content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'">
+  <link href="./styles.css" rel="stylesheet">
+  <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+  <title>Don't tell google browser</title>
+</head>
+
+<body>
+  <div class="top">
+    <button type="button" class="btn btn-primary" id="backButton">&lt;</button>
+    <button class="btn btn-primary" id="homeButton">home</button>
+    <button class="btn btn-primary" id="forwardButton">&gt;</button>
+    <input type="text" class="url">
+    <button class="btn btn-primary" id="refreshButton">Refresh</button>
+    <button class="btn btn-primary" id="viewHistoryButton">View History</button>
+    <button class="btn btn-primary" id="viewCookiesButton">View Cookies</button>
+  </div>
+  <div class="main-container">
+    <webview src="https://www.startpage.com" id="myWebview"></webview>
+    <div class="container" id="historyContainer" style="display: none;">
+        <h3>Browsing History</h3>
+        <ul class="list-group" id="historyList"></ul>
     </div>
-    <webview src="https://www.google.com" id="myWebview"></webview>
-    <script src="script.js"></script>
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-	//some duplicate js in here
-        //auto-focus on the search bar
-        document.getElementById('url').focus();
+    <div class="container" id="cookiesContainer" style="display: none;">
+      <h3>Cookies</h3>
+      <ul class="list-group" id="cookiesList"></ul>
+  </div>
+</div>
 
-        //keyboard shortcut for Ctrl+R for refresh
-        document.addEventListener('keydown', function(event) {
-          if (event.ctrlKey && event.key === 'r') {
-              document.getElementById("myWebview").reload();
-              event.preventDefault();
-          }
-        });
 
-        //refresh button
-        function refreshPage() {
-          document.getElementById("myWebview").reload();
-        }
-        document.getElementById('refreshButton').addEventListener('click', refreshPage);
+  <script src="browserScripts/navigationScripts.js"></script>
+  <script src="browserScripts/browserScripts.js"></script>
+  <script src="browserScripts/cookies.js"></script>
+  <script src="privacyScripts/privacyScripts.js"></script>
+  <script src="censorshipScripts/censorshipScripts.js"></script>
+</body>
 
-        //context menu for right-clicking
-        document.getElementById("myWebview").addEventListener('contextmenu', function(event) {
-          var linkURL = event.target.href;
-          if (linkURL) {
-              event.preventDefault();
-          }
-        });
-      });
-    </script>
-  </body>
 </html>
