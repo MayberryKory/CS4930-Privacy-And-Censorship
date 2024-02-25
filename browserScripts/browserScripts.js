@@ -5,11 +5,28 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const webview = document.getElementById('myWebview');
     let historyStack = [];
-    
+    const historyContainer = document.getElementById('historyContainer');
+    const historyList = document.getElementById('historyList');
 
     // View history
     document.getElementById('viewHistoryButton').addEventListener('click', function() {
-        console.log('Browsing History:', historyStack);
+        // Toggle the visibility of the history container
+        if (historyContainer.style.display === 'none') {
+            historyContainer.style.display = 'block';
+        } else {
+            historyContainer.style.display = 'none';
+        }
+
+        // Clear the existing history list
+        historyList.innerHTML = '';
+
+        // Populate the history list with clickable links
+        historyStack.forEach(function(url, index) {
+            const listItem = document.createElement('li');
+            listItem.className = 'list-group-item';
+            listItem.innerHTML = `<a href="#" onclick="loadURL('${url}');">${url}</a>`;
+            historyList.appendChild(listItem);
+        });
     });
 
     // Listen for 'did-navigate' event to capture navigations
@@ -18,12 +35,14 @@ document.addEventListener('DOMContentLoaded', function () {
         historyStack.push(event.url); // Add URL to history
     });
 
-    // Add dev tools this functions not working right. 
-    // document.addEventListener('keydown', function (e) {
-    //     if (e.key === 'F12') {
-    //         webview.toggleDevTools();
-    //     }
-    // });
+    // Load a URL and push it to the history stack
+    function loadURL(url) {
+        webview.loadURL(url);
+        historyStack.push(url); // Add URL to history
+        // Hide the history container when a link is clicked
+        historyContainer.style.display = 'none';
+    }
+
 
     // Load a URL and push it to the history stack
     function loadURL(url) {
@@ -31,20 +50,8 @@ document.addEventListener('DOMContentLoaded', function () {
         historyStack.push(url); // Add URL to history
     }
 
-    // this functions not working right either.
-    // View cookies
-    document.getElementById('viewCookiesButton').addEventListener('click', viewCookies);
-    function viewCookies() {
-        console.log('i told you this aint working');
-        // const { session } = require('electron');
-        // session.defaultSession.cookies.get({})
-        //     .then((cookies) => {
-        //         console.log('Cookies:', cookies);
-        //     })
-        //     .catch((error) => {
-        //         console.error('Error fetching cookies', error);
-        //     });
-    }
+    
+    
 
     // Auto-focus on the search bar --> clicks search bar for you
     var urlInput = document.querySelector('.url');

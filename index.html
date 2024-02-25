@@ -6,24 +6,36 @@
   <meta http-equiv="Content-Security-Policy"
     content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'">
   <link href="./styles.css" rel="stylesheet">
+  <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
   <title>Don't tell google browser</title>
 </head>
 
 <body>
   <div class="top">
-    <button id="backButton">&lt;</button>
-    <button id="homeButton">home</button>
-    <button id="forwardButton">&gt;</button>
+    <button type="button" class="btn btn-primary" id="backButton">&lt;</button>
+    <button class="btn btn-primary" id="homeButton">home</button>
+    <button class="btn btn-primary" id="forwardButton">&gt;</button>
     <input type="text" class="url">
-    <button id="refreshButton">Refresh</button>
-    <button id="viewHistoryButton">View History</button>
-    <button id="viewCookiesButton">View Cookies</button>
+    <button class="btn btn-primary" id="refreshButton">Refresh</button>
+    <button class="btn btn-primary" id="viewHistoryButton">View History</button>
+    <button class="btn btn-primary" id="viewCookiesButton">View Cookies</button>
   </div>
-  <webview src="https://www.duckduckgo.com" id="myWebview"></webview>
+  <div class="main-container">
+    <webview src="https://www.startpage.com" id="myWebview"></webview>
+    <div class="container" id="historyContainer" style="display: none;">
+        <h3>Browsing History</h3>
+        <ul class="list-group" id="historyList"></ul>
+    </div>
+    <div class="container" id="cookiesContainer" style="display: none;">
+      <h3>Cookies</h3>
+      <ul class="list-group" id="cookiesList"></ul>
+  </div>
+</div>
+
 
   <script src="browserScripts/navigationScripts.js"></script>
   <script src="browserScripts/browserScripts.js"></script>
-
+  <script src="browserScripts/cookies.js"></script>
   <script src="privacyScripts/privacyScripts.js"></script>
   <script src="censorshipScripts/censorshipScripts.js"></script>
 </body>
