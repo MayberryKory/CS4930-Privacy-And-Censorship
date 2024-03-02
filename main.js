@@ -12,6 +12,9 @@ function createWindow() {
     }
   });
 
+  mainWindow.setAlwaysOnTop(true, 'floating');
+
+
   mainWindow.once('ready-to-show', () => {
     mainWindow.setIcon(path.resolve(__dirname, './assets/icon.png'));
     mainWindow.show();
