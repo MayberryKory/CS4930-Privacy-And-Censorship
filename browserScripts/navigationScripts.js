@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     //function to navigate to the home page
     function goHome() {
-        document.getElementById("myWebview").loadURL("https://www.startpage.com");
+        document.getElementById("myWebview").loadURL("https://www.google.com");
     }
 
     //event listener for the home button
