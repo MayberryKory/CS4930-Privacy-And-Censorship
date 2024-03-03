@@ -19,3 +19,5 @@ document.addEventListener('DOMContentLoaded', function () {
     webview.addEventListener('did-navigate', censorContent);
     webview.addEventListener('did-navigate-in-page', censorContent);
 });
+
+
