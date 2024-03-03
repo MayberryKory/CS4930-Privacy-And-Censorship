@@ -50,9 +50,6 @@ document.addEventListener('DOMContentLoaded', function () {
         historyStack.push(url); // Add URL to history
     }
 
-    
-    
-
     // Auto-focus on the search bar --> clicks search bar for you
     var urlInput = document.querySelector('.url');
     urlInput.focus();
