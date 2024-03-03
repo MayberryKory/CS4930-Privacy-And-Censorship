@@ -1,7 +1,23 @@
 const { app, BrowserWindow, globalShortcut, ipcMain, session } = require('electron');
 const path = require('path');
+const { ElectronBlocker } = require('@cliqz/adblocker-electron');
 
-function createWindow() {
+//new adblocker function --> more efficient and less likely to cause issues
+async function enableAdBlocker() {
+  try {
+    const blocker = await ElectronBlocker.fromPrebuiltAdsAndTracking(fetch);
+    if (session.defaultSession) {
+      blocker.enableBlockingInSession(session.defaultSession);
+      console.log('Ad and tracker blocker enabled!');
+    } else {
+      console.error('Default session not available.');
+    }
+  } catch (error) {
+    console.error('Error enabling ad and tracker blocker:', error);
+  }
+}
+
+async function createWindow() {
   const mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
@@ -12,6 +28,10 @@ function createWindow() {
     }
   });
 
+  await enableAdBlocker();
+
+  mainWindow.setAlwaysOnTop(true, 'floating');
+
   mainWindow.once('ready-to-show', () => {
     mainWindow.setIcon(path.resolve(__dirname, './assets/icon.png'));
     mainWindow.show();
@@ -19,26 +39,9 @@ function createWindow() {
 
   mainWindow.loadFile('index.html');
 
-  //intercepting network requests to get all URLs (part of adblocking)
-  const filter = {
-    urls: ['*://*/*'], //intercept all URLs
-  };
-  
-  session.defaultSession.webRequest.onBeforeRequest(filter, (details, callback) => {
-    //check if the request URL matches a known ad domain
-    if (isAdDomain(details.url)) {
-      callback({ cancel: true });
-    } else {
-      callback({ cancel: false });
-    }
-  });
-
   // Set up DevTools shortcut
   globalShortcut.register('F12', () => {
-    const focusedWindow = BrowserWindow.getFocusedWindow();
-    if (focusedWindow) {
-      focusedWindow.webContents.toggleDevTools();
-    }
+    mainWindow.webContents.toggleDevTools();
   });
 
   // Handle window activation
@@ -64,28 +67,6 @@ function createWindow() {
       });
     }
   });
-}
-
-function isAdDomain(url) {
-  //add any ads you want to block 
-  //also blocks the user from going there to begin with
-  const adDomains = [
-    'doubleclick.net',
-    'googlesyndication.com',
-    'facebook.com',
-    'twitter.com',
-    'foxnews.com',
-    'analytics.google.com',
-    'scorecardresearch.com',
-    'adnxs.com',
-    'adsrvr.org',
-    'openx.net',
-    'popads.net',
-    'popcash.net',
-    //add more
-  ];
-  //check if the URL matches any of the ad domains
-  return adDomains.some(domain => url.includes(domain));
 }
 
 app.whenReady().then(createWindow);
