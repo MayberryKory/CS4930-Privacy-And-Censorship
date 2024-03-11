@@ -1,68 +1,60 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
+    const webview = document.getElementById('myWebview');
+    const homeButton = document.getElementById('homeButton');
+    const backButton = document.getElementById('backButton');
+    const forwardButton = document.getElementById('forwardButton');
+    const urlInput = document.getElementById('urlInput');
+    const refreshButton = document.getElementById('refreshButton');
     //function to navigate to the home page
     function goHome() {
-        document.getElementById("myWebview").loadURL("https://www.google.com");
+        webview.loadURL("https://coveryourtracks.eff.org/");
     }
-
-    //event listener for the home button
-    document.getElementById('homeButton').addEventListener('click', goHome);
+    homeButton.addEventListener('click', goHome);
 
     //function to navigate back
     function goBack() {
-        document.getElementById("myWebview").goBack();
+        webview.goBack();
     }
+    backButton.addEventListener('click', goBack);
 
-    //event listener for the back button
-    document.getElementById('backButton').addEventListener('click', goBack);
 
     //function to navigate forward
     function goForward() {
-        document.getElementById("myWebview").goForward();
+        webview.goForward();
     }
+    forwardButton.addEventListener('click', goForward);
 
-    //event listener for the forward button
-    document.getElementById('forwardButton').addEventListener('click', goForward);
-
-    //function to handle URL navigation
-    function goToURL() {
-        var urlInput = document.querySelector('.url');
-        var url = urlInput.value.trim();
-    
-        //check if the URL starts with a protocol (e.g., 'http://' or 'https://')
-        if (!url.match(/^https?:\/\//i)) {
-            //if not, pretend it does
-            url = 'https://' + url;
+    function handleURL() {
+        let url = "";
+        const inputURL = urlInput.value;
+        if (inputURL.startsWith('http://') || inputURL.startsWith('https://')) {
+            url = inputURL.trim();
+            alert(url);
         }
-    
-        document.getElementById("myWebview").loadURL(url);
+        else {
+            url = 'https://' + inputURL;
+        }
+        webview.loadURL(url);
     }
 
-    //auto-focus on the search bar --> clicks search bar for you
-    var urlInput = document.querySelector('.url');
-    urlInput.focus();
-
-    //event listener for 'Enter' key press in the search bar
-    urlInput.addEventListener('keydown', function(event) {
+    urlInput.addEventListener('keydown', function (event) {
         if (event.key === 'Enter') {
             event.preventDefault();
-            goToURL();
-        }
-    });
-
-    //keyboard shortcut for Ctrl+R for refresh
-    document.addEventListener('keydown', function(event) {
-        if (event.ctrlKey && event.key === 'r') {
-            document.getElementById("myWebview").reload();
-            event.preventDefault();
+            handleURL();
         }
     });
 
     //function to refresh the page
     function refreshPage() {
-        document.getElementById("myWebview").reload();
+        webview.reload();
     }
 
-    //event listener for the refresh button
-    document.getElementById('refreshButton').addEventListener('click', refreshPage);
-    
+    //keyboard shortcut for Ctrl+R for refresh
+    window.addEventListener('keydown', function (event) {
+        if (event.ctrlKey && event.key === 'r') {
+            event.preventDefault();
+            refreshPage();
+        }
+    });
+    refreshButton.addEventListener('click', refreshPage);
 });

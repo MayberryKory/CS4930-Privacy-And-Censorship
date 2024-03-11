@@ -4,9 +4,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const cookiesContainer = document.getElementById('cookiesContainer');
     const cookiesList = document.getElementById('cookiesList');
+    const viewCookiesButton = document.getElementById('viewCookiesButton');
 
     // View cookies
-    document.getElementById('viewCookiesButton').addEventListener('click', function() {
+   viewCookiesButton.addEventListener('click', function() {
         // Request cookies from the main process
         electron.ipcRenderer.send('get-cookies');
 
