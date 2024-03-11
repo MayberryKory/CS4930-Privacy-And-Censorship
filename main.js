@@ -27,6 +27,9 @@ async function createWindow() {
       webviewTag: true,
     }
   });
+//set window always on top for prototyping
+  mainWindow.setAlwaysOnTop(true, 'floating');
+
 
   await enableAdBlocker();
 
