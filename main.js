@@ -31,6 +31,7 @@ async function createWindow() {
       nodeIntegration: true,
       contextIsolation: false,
       webviewTag: true,
+      doNotTrack: true,
     },
   });
   //set window always on top for prototyping

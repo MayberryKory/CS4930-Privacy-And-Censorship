@@ -5,9 +5,3 @@ I've been looking up on Electronic Frontier Foundation. They make the tests we a
 ## Privacy Badger
 
 Privacy badger is the EFF recommended privacy blocker. Looking through their website I found a link to easylist. The easylist is a txt file of objects to block to increase internet privacy. The list includes ads and invisible trackers.
-
-Resources:
-
-- https://easylist.to/easylist/easyprivacy.txt
-- https://github.com/EFForg/privacybadger
-- https://privacybadger.org/#Why-does-Privacy-Badger-block-ads
