@@ -2,7 +2,6 @@ const { app, BrowserWindow, globalShortcut, ipcMain, session } = require('electr
 const path = require('path');
 const { ElectronBlocker } = require('@cliqz/adblocker-electron');
 
-//new adblocker function --> more efficient and less likely to cause issues
 async function enableAdBlocker() {
   try {
     const blocker = await ElectronBlocker.fromPrebuiltAdsAndTracking(fetch);
@@ -17,7 +16,7 @@ async function enableAdBlocker() {
   }
 }
 
-async function createWindow() {
+function createWindow() {
   const mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
@@ -28,16 +27,28 @@ async function createWindow() {
     }
   });
 
-  await enableAdBlocker();
-
-  mainWindow.setAlwaysOnTop(true, 'floating');
-
   mainWindow.once('ready-to-show', () => {
-    mainWindow.setIcon(path.resolve(__dirname, './assets/icon.png'));
+    mainWindow.setIcon(path.resolve(__dirname, './assets/icon2.png'));
     mainWindow.show();
   });
 
   mainWindow.loadFile('index.html');
+
+  // Intercepting network requests to block ads
+  const filter = {
+    urls: ['*://*/*'],
+  };
+
+  session.defaultSession.webRequest.onBeforeRequest(filter, (details, callback) => {
+    if (isAdDomain(details.url)) {
+      callback({ cancel: true });
+    } else {
+      callback({ cancel: false });
+    }
+  });
+
+  // Enable ad blocker
+  enableAdBlocker();
 
   // Set up DevTools shortcut
   globalShortcut.register('F12', () => {
@@ -67,6 +78,25 @@ async function createWindow() {
       });
     }
   });
+}
+
+function isAdDomain(url) {
+  const adDomains = [
+    'doubleclick.net',
+    'googlesyndication.com',
+    'facebook.com',
+    'twitter.com',
+    'foxnews.com',
+    'analytics.google.com',
+    'scorecardresearch.com',
+    'adnxs.com',
+    'adsrvr.org',
+    'openx.net',
+    'popads.net',
+    'popcash.net',
+    // Add more ad domains as needed
+  ];
+  return adDomains.some(domain => url.includes(domain));
 }
 
 app.whenReady().then(createWindow);
