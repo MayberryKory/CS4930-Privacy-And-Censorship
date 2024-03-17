@@ -2,26 +2,24 @@
 // event listeners that depend on elements being available in the page.
 document.addEventListener('DOMContentLoaded', function () {
     console.log('DOM content loaded');
-
     const webview = document.getElementById('myWebview');
-    let historyStack = [];
     const historyContainer = document.getElementById('historyContainer');
     const historyList = document.getElementById('historyList');
+    const historyButton = document.getElementById('viewHistoryButton');
+    let historyStack = [];
 
     // View history
-    document.getElementById('viewHistoryButton').addEventListener('click', function() {
+    historyButton.addEventListener('click', function () {
         // Toggle the visibility of the history container
         if (historyContainer.style.display === 'none') {
             historyContainer.style.display = 'block';
         } else {
             historyContainer.style.display = 'none';
         }
-
         // Clear the existing history list
         historyList.innerHTML = '';
-
         // Populate the history list with clickable links
-        historyStack.forEach(function(url, index) {
+        historyStack.forEach(function (url, index) {
             const listItem = document.createElement('li');
             listItem.className = 'list-group-item';
             listItem.innerHTML = `<a href="#" onclick="loadURL('${url}');">${url}</a>`;
@@ -42,7 +40,6 @@ document.addEventListener('DOMContentLoaded', function () {
         // Hide the history container when a link is clicked
         historyContainer.style.display = 'none';
     }
-
 
     // Load a URL and push it to the history stack
     function loadURL(url) {

@@ -26,6 +26,9 @@ function createWindow() {
       webviewTag: true,
     }
   });
+//set window always on top for prototyping
+  mainWindow.setAlwaysOnTop(true, 'floating');
+
 
   mainWindow.once('ready-to-show', () => {
     mainWindow.setIcon(path.resolve(__dirname, './assets/icon2.png'));
