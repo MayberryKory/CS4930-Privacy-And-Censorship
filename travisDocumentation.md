@@ -83,6 +83,22 @@ To adjust similar settings in an Electron app, you can use the following options
 
 - DuckDuckGo Tracker radar
 - [DuckDuckGo Repo](https://github.com/duckduckgo)
+- What they check against?
+
+#### How they make their list to block against
+
+1. Prevalence of how often the domain is found in a crawl
+2. Sites count of sites the domain was found on the crawl
+3. Categories. Level of reasons for using the domainp
+4. Fingretrinting
+5. Cookies that are found as a third party cookie
+6. Performance of loading resources from the domain
+7. The owner of the entity.
+8. Resources the domain uses
+9. Subdomains the resources are found on
+10. They crawl with playwright
+
+DuckDuckGo recommends building our own tracker block list
 
 ## GPC
 
